@@ -153,6 +153,16 @@ class SDLConan(ConanFile):
     def package_id(self):
         del self.info.options.sdl2main
 
+        if self.settings.os == "Linux":
+            if self.options.alsa:
+                self.info.requires["libalsa"].full_version_mode()
+            if self.options.esd:
+                self.info.requires["esd"].full_version_mode()
+            if self.options.pulse:
+                self.info.requires["pulseaudio"].full_version_mode()
+            if self.options.sndio:
+                self.info.requires["sndio"].full_version_mode()
+
     def build_requirements(self):
         if self.settings.os == "Linux":
             self.build_requires("pkgconf/1.7.4")
